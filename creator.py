@@ -3,6 +3,7 @@ import json
 import base64
 import time
 
+
 def yorn(response:str, default:bool):
     if response.lower() in ["yes", "y"]:
         return True
