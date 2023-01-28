@@ -79,10 +79,14 @@ def generate_invite(server):
 #save servers, and an invite to said servers
 guilds = json.loads(requests.get("https://discord.com/api/v9/users/@me/guilds", headers=get_headers).text)
 for guild in guilds:
-    invite = generate_invite(guild['id'])
-    serber = [guild['id'], guild['name'], invite]
-    user['servers'].append(serber)
-    print("Added Server " + str(invite) + " for "  + str(guild['name'])) 
+    try:
+        invite = generate_invite(guild['id'])
+        serber = [guild['id'], guild['name'], invite]
+        user['servers'].append(serber)
+        print("Added Server " + str(invite) + " for "  + str(guild['name'])) 
+    except:
+        print("Rate limited, sleeping")
+        time.sleep(10)
 
 
 with open(user['user']['username'] + ".backup", "w+") as handle:
